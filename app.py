@@ -13,6 +13,3 @@ def homepage():
       'https://valuation.homify.com.vn/RealEstatePriceService/landprice',
       params=params)
   return render_template('result.html', movies=json.loads(r.text)['Gia'])
-
-if __name__ == '__main__':
-  app.run(host='0.0.0.0', debug=True)
