@@ -1,18 +1,8 @@
-# movies.py
+from urllib.parse import urlencode
+from urllib.request import Request, urlopen
 
-from flask import Flask, render_template
-import requests
-import json
-
-app = Flask(__name__, template_folder='.')
-
-@app.route('/')
-def homepage():
-  params = {'place':{'city':'Hà Nội','district':'Ba Đình'},'category':'rent','offset':0,'size':20,'price':{'lte': 0.1},'area':{'lte':30}}
-  r = requests.get(
-      'https://search.homify.com.vn/api/v3.0/realties/search/_filter/',
-      params=params)
-  return render_template('result.html', movies=json.loads(r.text)['movies'])
-
-if __name__ == '__main__':
-  app.run(host='0.0.0.0', debug=True)
+url = 'https://valuation.homify.com.vn/RealEstatePriceService/landprice'
+post_fields = {'cuoi':'','dau':'','diadiem':'HN','dientich':'80','duong':'Cầu Giấy','loaiBDS':'D','loaiduong':'D','mattien':'','nam':'2016','phuong':'Quan Hoa','quan':'Cầu Giấy'}
+request = Request(url, urlencode(post_fields).encode())
+json = urlopen(request).read().decode()
+print(json)
